@@ -116,7 +116,6 @@ const server = http.createServer((request, response) => {
             id = parseInt(query.input.split("/")[2]);
             let user = users.filter(storUser => id === storUser.ID)[0]
             if (user !== 'undefined') {
-                console.log(user);
                 response.writeHead(200, {"Content-Type": "text/plain"});
                 let json = JSON.stringify(user);
                 response.end(json);
