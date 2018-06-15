@@ -109,7 +109,7 @@ myEventEmitter.emit(topic3.name, jur.sendNews(topic3.name));
 const server = http.createServer((request, response) => {
     
      let pathname = url.parse(request.url).pathname
-     let query = url.parse(request.url, true).query;
+
     if (request.method == 'GET') {
         if (pathname.match(new RegExp('/user/[0-9]$'))) {
             let query = pathname.match(new RegExp('/user/[0-9]'))
