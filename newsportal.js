@@ -107,9 +107,8 @@ myEventEmitter.emit(topic3.name, jur.sendNews(topic3.name));
 //jur.interval(myEventEmitter, topics1.name);
 
 const server = http.createServer((request, response) => {
+    let pathname = url.parse(request.url).pathname
     
-     let pathname = url.parse(request.url).pathname
-
     if (request.method == 'GET') {
         if (pathname.match(new RegExp('/user/[0-9]$'))) {
             let query = pathname.match(new RegExp('/user/[0-9]'))
