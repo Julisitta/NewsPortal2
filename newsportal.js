@@ -69,16 +69,15 @@ const server = http.createServer((request, response) => {
         } else  if (pathname.match('/user/[0-9]+/export$')) {
             let user = getUserAndNews(pathname.match('/user/[0-9]+/export$'), false);
             if (user.length == 1) {
-                let json = JSON.stringify({subsData:user[0].articles});
-                let filePath = 'test.txt';
+                let json = JSON.stringify({Articles:user[0].articles});
+                let time = new Date(Date.now());
+                let filePath = "user_" + user[0].ID + "_" + time.getHours() + "_" + time.getMinutes() + ".json"
                 fs.writeFile(filePath, json, (err) => {
                     if (err) throw err;
-                    console.log('The file has been saved!');
+                    console.log('The file has been saved!', filePath);
                 });
-                let stat = fs.statSync(filePath);
                 response.writeHead(200, {
                     'Content-Type': 'Content-Type:text/plain; charset=ISO-8859-15',
-                    'Content-Length': stat.size
                 });
                 fs.createReadStream(filePath).pipe(response);
             } else {
@@ -104,7 +103,7 @@ const server = http.createServer((request, response) => {
                 respErrFunc("News or User");
             }
         } else  if (pathname.match('/news/[0-9]+/unsubscribe/[0-9]+$')) {
-            let newsUser = getUserAndNews(pathname.match('/news/[0-9]+/unsubscribe/[0-9]+$'), true);
+            let newsUser = getUserAndNews(pathname.match('/news/[0-9]+/unsubscribe/[0-9]+$'), true)
             let news = newsUser[0];
             let user = newsUser[1];
             if (user.length == 1 && news.length == 1) {
