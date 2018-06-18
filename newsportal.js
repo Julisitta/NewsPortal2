@@ -24,7 +24,6 @@ let jur = new Jurnaluga("CrocusSity", topics);
 
 const server = http.createServer((request, response) => {
     let pathname = url.parse(request.url).pathname
-<<<<<<< HEAD
     let responseFunc = (date) => {
         response.writeHead(200, {"Content-Type": "application/json"});
         if (typeof date !== 'string') {
@@ -57,18 +56,6 @@ const server = http.createServer((request, response) => {
             let user = getUserAndNews(pathname.match('/user/[0-9]+'), false)
             if (user.length == 1) {
                 responseFunc(user[0]);
-=======
-    
-    if (request.method == 'GET') {
-        if (pathname.match(new RegExp('/user/[0-9]$'))) {
-            let query = pathname.match(new RegExp('/user/[0-9]'))
-            id = parseInt(query.input.split("/")[2]);
-            let user = users.filter(storUser => id === storUser.ID)[0]
-            if (user !== 'undefined') {
-                response.writeHead(200, {"Content-Type": "text/plain"});
-                let json = JSON.stringify(user);
-                response.end(json);
->>>>>>> 25265d22123d8fc246e98a668d467a918dae9ed3
             } else {
                 respErrFunc("User");
             }
