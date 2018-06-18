@@ -23,7 +23,7 @@ let topics = [topic1, topic2, topic3];
 let jur = new Jurnaluga("CrocusSity", topics);
 
 const server = http.createServer((request, response) => {
-    let pathname = url.parse(request.url).pathname
+    let pathname = url.parse(request.url).pathname;
     let responseFunc = (info) => {
         response.writeHead(200, {"Content-Type": "application/json"});
         if (typeof info !== 'string') {
@@ -44,30 +44,30 @@ const server = http.createServer((request, response) => {
             let userID = parseInt(query.input.split("/")[4]);
             let news = topics.filter(storTopic => newsID === storTopic.ID);
             let user = users.filter(storUser => userID === storUser.ID);
-            return [news, user]
+            return [news, user];
         } else {
             let userID = parseInt(query.input.split("/")[2]);
             let user = users.filter(storUser => userID === storUser.ID);
-            return user
+            return user;
         }   
     }
     if (request.method == 'GET') {
         if (pathname.match('/user/[0-9]+$')) {
-            let user = getUserAndNews(pathname.match('/user/[0-9]+'), false)
+            let user = getUserAndNews(pathname.match('/user/[0-9]+'), false);
             if (user.length == 1) {
                 responseFunc(user[0]);
             } else {
                 respErrFunc("User");
             }
         } else if (pathname.match('/user/[0-9]+/subscription$')) {
-            let user = getUserAndNews(pathname.match('/user/[0-9]+/subscription$'), false)
+            let user = getUserAndNews(pathname.match('/user/[0-9]+/subscription$'), false);
             if (user.length == 1) {
                 responseFunc({subscriptions:Object.keys(user[0].articles)});
             } else {
                 respErrFunc("User");
             }
         } else  if (pathname.match('/user/[0-9]+/export$')) {
-            let user = getUserAndNews(pathname.match('/user/[0-9]+/export$'), false)
+            let user = getUserAndNews(pathname.match('/user/[0-9]+/export$'), false);
             if (user.length == 1) {
                 let json = JSON.stringify({subsData:user[0].articles});
                 let filePath = 'test.txt';
@@ -85,7 +85,7 @@ const server = http.createServer((request, response) => {
                 respErrFunc("User");
             }
         } else  if (pathname.match('/news/[0-9]+$')) {
-            let news = getUserAndNews(pathname.match('/news/[0-9]+$'), true)[0]
+            let news = getUserAndNews(pathname.match('/news/[0-9]+$'), true)[0];
             if (news.length == 1) {
                 let json = JSON.stringify(news[0]);
                 responseFunc(json);
@@ -93,7 +93,7 @@ const server = http.createServer((request, response) => {
                 respErrFunc("News");
             }
         } else  if (pathname.match('/news/[0-9]+/subscribe/[0-9]+$')) {
-            let newsUser = getUserAndNews(pathname.match('/news/[0-9]+/subscribe/[0-9]+$'), true)
+            let newsUser = getUserAndNews(pathname.match('/news/[0-9]+/subscribe/[0-9]+$'), true);
             let news = newsUser[0];
             let user = newsUser[1];
             if (user.length == 1 && news.length == 1) {
@@ -104,9 +104,9 @@ const server = http.createServer((request, response) => {
                 respErrFunc("News or User");
             }
         } else  if (pathname.match('/news/[0-9]+/unsubscribe/[0-9]+$')) {
-            let newsUser = getUserAndNews(pathname.match('/news/[0-9]+/unsubscribe/[0-9]+$'), true)
-            let news = newsUser[0]
-            let user = newsUser[1]
+            let newsUser = getUserAndNews(pathname.match('/news/[0-9]+/unsubscribe/[0-9]+$'), true);
+            let news = newsUser[0];
+            let user = newsUser[1];
             if (user.length == 1 && news.length == 1) {
                 myEventEmitter.removeSubscriber(news[0].name, user[0]);
                 responseFunc("User unsubscribed");
