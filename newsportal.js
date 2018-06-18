@@ -24,14 +24,14 @@ let jur = new Jurnaluga("CrocusSity", topics);
 
 const server = http.createServer((request, response) => {
     let pathname = url.parse(request.url).pathname
-    let responseFunc = (date) => {
+    let responseFunc = (info) => {
         response.writeHead(200, {"Content-Type": "application/json"});
-        if (typeof date !== 'string') {
-            let json = JSON.stringify(date);
+        if (typeof info !== 'string') {
+            let json = JSON.stringify(info);
             response.end(json);      
         }
         else {
-            response.end(date);   
+            response.end(info);   
         }  
     }
     let respErrFunc = (err) => {
