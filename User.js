@@ -2,20 +2,18 @@ class User {
     constructor(id, name) {
         this.ID = id;
         this.name = name;
-        this.inform = this.inform.bind(this);
-        this.articles = {};
+        this.articles = [];
+        this.artNames = {}
     }
     inform(topic, data) {
-        console.log(this.ID + " user " + this.name + " get " + data);
-        if(!this.articles[topic.name]) {
-            this.articles[topic.name] = [];
+        if (!this.artNames[topic.ID]) {
+            this.artNames[topic.ID] = topic.name   
         }
-        let tmpData = {
+        this.articles.push({
             "title": topic.name,
             "message": data,
             "news_id": topic.ID
-        }
-        this.articles[topic.name].push(tmpData);
+        });
     }
 }
 module.exports = User;
